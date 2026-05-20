@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Generador de Examen</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 40px;
+        }
+
+        form {
+            background-color: white;
+            max-width: 500px;
+            margin: auto;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #444;
+        }
+
+        select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<form th:action="@{/examen}" method="post" th:object="${examenDto}">
+
+    <h2>Generador de Examen</h2>
+
+    <label>Selecciona el Lenguaje:</label>
+
+    <select th:field="*{lenguaje}">
+        <option value="" disabled selected>Lenguajes</option>
+        <option th:value="java">Java</option>
+        <option th:value="python">Python</option>
+        <option th:value="sql">SQL</option>
+    </select>
+
+    <label>Selecciona la dificultad:</label>
+
+    <select th:field="*{dificultad}">
+        <option value="" disabled selected>Dificultad</option>
+        <option th:value="basico">Básico</option>
+        <option th:value="medio">Medio</option>
+        <option th:value="dificil">Difícil</option>
+    </select>
+
+    <button type="submit">Generar</button>
+
+</form>
+
+</body>
+</html>

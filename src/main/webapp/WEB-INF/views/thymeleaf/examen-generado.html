@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Examen</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 30px;
+        }
+
+        form {
+            background-color: white;
+            max-width: 700px;
+            margin: auto;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #333;
+        }
+
+        .pregunta {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #fafafa;
+        }
+
+        .consigna {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .opcion {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<form th:action="@{/guardar-examen}" method="post" th:object="${examen}">
+    <h2>Responder las preguntas</h2>
+
+    <div th:each="pregunta : ${preguntas}" class="pregunta">
+
+        <span class="consigna" th:text="${pregunta.consigna}"></span>
+        <span class="opcion" th:text="'A) ' + ${pregunta.opcionA}"></span>
+        <span class="opcion" th:text="'B) ' + ${pregunta.opcionB}"></span>
+        <span class="opcion" th:text="'C) ' + ${pregunta.opcionC}"></span>
+
+        <input type="text" maxlength="1" placeholder="Escribí tu respuesta">
+
+    </div>
+    <button type="submit">Enviar examen</button>
+</form>
+
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <title>Ranking General</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+
+<body class="d-flex flex-column min-vh-100 bg-dark text-light">
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom border-secondary">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="#">
+            <i class="bi bi-braces text-primary"></i> Plataforma trabajo con juegos
+        </a>
+    </div>
+</nav>
+
+<div class="container mt-5 flex-grow-1">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+
+            <div class="card shadow border-secondary">
+                <div class="card-header text-center py-3 border-bottom border-secondary">
+                    <h2 class="mb-0"><i class="bi bi-trophy-fill text-warning me-2"></i> Ranking General</h2>
+                </div>
+                <div class="card-body p-4">
+
+                    <div th:if="${#lists.isEmpty(listaCandidatos)}" class="alert alert-warning text-center mt-4">
+                        <i class="bi bi-info-circle fs-4 d-block mb-2"></i>
+                        <strong>&iexcl;El ranking est&aacute; vac&iacute;o!</strong> Todav&iacute;a no hay candidatos registrados.
+                    </div>
+
+                    <table th:unless="${#lists.isEmpty(listaCandidatos)}"
+                           class="table table-striped table-hover table-bordered mt-4">
+                    </table>
+
+                    <table class="table table-striped table-hover table-bordered mt-4">
+                        <thead>
+                        <tr>
+                            <th scope="col" class="text-center">Puesto</th>
+                            <th scope="col">Usuario</th>
+                            <th scope="col" class="text-center">Puntaje</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="candidato, iterStat : ${listaCandidatos}">
+
+                            <td class="text-center fw-bold align-middle" th:text="${iterStat.count}">1</td>
+
+                            <td class="align-middle" th:text="${candidato.nombreUsuario}">Nombre del Usuario</td>
+
+                            <td class="text-center align-middle">
+                                <span class="badge bg-success fs-6" th:text="${candidato.puntaje} + ' pts'">0 pts</span>
+                            </td>
+
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<footer class="bg-dark text-center py-3 border-top border-secondary mt-auto">
+    <div class="container">
+        <p class="mb-0 text-muted"><i class="bi bi-c-circle"></i> 2026 Plataforma de trabajo con juegos - Equipo 5</p>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmxc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+</body>
+</html>

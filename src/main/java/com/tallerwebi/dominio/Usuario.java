@@ -12,10 +12,12 @@ public class Usuario {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  private String nombreUsuario;
   private String email;
   private String password;
   private String rol;
   private Boolean activo = false;
+  private Integer puntaje;
 
   public Long getId() {
     return id;
@@ -59,5 +61,21 @@ public class Usuario {
 
   public void activar() {
     activo = true;
+  }
+
+  public int getPuntaje() {
+    return puntaje;
+  }
+
+  public void setPuntaje(Integer puntaje) {
+    this.puntaje = puntaje;
+  }
+
+  public String getNombreUsuario() {
+    return nombreUsuario;
+  }
+
+  public void setNombreUsuario(String nombreUsuario) {
+    this.nombreUsuario = nombreUsuario;
   }
 }

@@ -77,6 +77,9 @@
     <h2>Responder las preguntas</h2>
 
     <div th:each="pregunta : ${preguntas}" class="pregunta">
+        <input type="hidden" th:field="*{dificultad}" />
+        <input type="hidden" th:field="*{lenguaje}" />
+        <input type="hidden" th:field="*{tiempoInicio}" />
 
         <span class="consigna" th:text="${pregunta.consigna}"></span>
         <span class="opcion" th:text="'A) ' + ${pregunta.opcionA}"></span>

@@ -1,9 +1,6 @@
 package com.tallerwebi.dominio;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalTime;
 
 @Entity
@@ -13,10 +10,11 @@ public class Examen {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long idReclutador;
+    @ManyToOne
+    private Usuario idUsuario;
     private Integer puntaje;
-    private String dificultad;
-    private String lenguaje;
+    private Dificultad dificultad;
+    private Lenguaje lenguaje;
     private LocalTime tiempoInicio;
     private LocalTime tiempoFinal;
 
@@ -28,20 +26,28 @@ public class Examen {
         this.id = id;
     }
 
-    public Long getIdReclutador() {
-        return idReclutador;
+    public Usuario getIdUsuario() {
+        return idUsuario;
     }
 
-    public void setIdReclutador(Long idReclutador) {
-        this.idReclutador = idReclutador;
+    public void setIdUsuario(Usuario idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
-    public String getDificultad() {
+    public Dificultad getDificultad() {
         return dificultad;
     }
 
-    public void setDificultad(String dificultad) {
+    public void setDificultad(Dificultad dificultad) {
         this.dificultad = dificultad;
+    }
+
+    public Lenguaje getLenguaje() {
+        return lenguaje;
+    }
+
+    public void setLenguaje(Lenguaje lenguaje) {
+        this.lenguaje = lenguaje;
     }
 
     public Integer getPuntaje() {
@@ -58,14 +64,6 @@ public class Examen {
 
     public void setTiempoInicio(LocalTime tiempoInicio) {
         this.tiempoInicio = tiempoInicio;
-    }
-
-    public String getLenguaje() {
-        return lenguaje;
-    }
-
-    public void setLenguaje(String lenguaje) {
-        this.lenguaje = lenguaje;
     }
 
     public LocalTime getTiempoFinal() {

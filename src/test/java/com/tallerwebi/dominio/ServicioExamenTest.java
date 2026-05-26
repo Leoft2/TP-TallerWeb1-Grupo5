@@ -1,6 +1,6 @@
 package com.tallerwebi.dominio;
 
-import com.tallerwebi.infraestructura.RespositorioExamenImpl;
+import com.tallerwebi.dominio.excepcion.OpcionInvalidaException;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -15,10 +15,10 @@ public class ServicioExamenTest {
     public void dadoQueSiNoIngresoAlgunaOpcionALaHoraDeGenerarUnExamenMeTiraUnaException() {
         givenExamenExistente();
         ExamenDto examenDto = new ExamenDto();
-        examenDto.setDificultad("basico");
-        examenDto.setLenguaje("");
+        examenDto.setDificultad(Dificultad.BASICO);
+        examenDto.setLenguaje(null);
 
-        assertThrows(OpcionInvalidaException.class, () -> servicioExamen.generarExamen(examenDto.getDificultad(), examenDto.getLenguaje()));
+        assertThrows(OpcionInvalidaException.class, () -> servicioExamen.generarExamen(examenDto.getLenguaje(), examenDto.getDificultad()));
     }
 
     private void givenExamenExistente() {

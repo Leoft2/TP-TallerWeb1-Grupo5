@@ -74,21 +74,26 @@
 <body>
 
 <form th:action="@{/guardar-examen}" method="post" th:object="${examen}">
-    <h2>Responder las preguntas</h2>
 
-    <div th:each="pregunta : ${preguntas}" class="pregunta">
-        <input type="hidden" th:field="*{dificultad}" />
-        <input type="hidden" th:field="*{lenguaje}" />
-        <input type="hidden" th:field="*{tiempoInicio}" />
+    <input type="hidden" th:field="*{dificultad}" />
+    <input type="hidden" th:field="*{lenguaje}" />
+    <input type="hidden" th:field="*{tiempoInicio}" />
+
+    <div th:each="pregunta, iterStat : ${preguntas}" class="pregunta">
+        <input type="hidden"
+               th:name="|preguntaIds[${iterStat.index}]|"
+               th:value="${pregunta.id}" />
 
         <span class="consigna" th:text="${pregunta.consigna}"></span>
         <span class="opcion" th:text="'A) ' + ${pregunta.opcionA}"></span>
         <span class="opcion" th:text="'B) ' + ${pregunta.opcionB}"></span>
         <span class="opcion" th:text="'C) ' + ${pregunta.opcionC}"></span>
 
-        <input type="text" maxlength="1" placeholder="Escribí tu respuesta">
-
+        <input type="text" maxlength="1"
+               th:name="|respuestas[${iterStat.index}]|"
+               placeholder="Escribí tu respuesta" />
     </div>
+
     <button type="submit">Enviar examen</button>
 </form>
 

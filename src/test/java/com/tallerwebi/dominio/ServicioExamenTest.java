@@ -9,7 +9,8 @@ import static org.mockito.Mockito.mock;
 public class ServicioExamenTest {
 
     RepositorioExamen repositorioExamen = mock(RepositorioExamen.class);
-    ServicioExamen servicioExamen = new ServicioExamenImpl(repositorioExamen);
+    RepositorioPregunta repositorioPregunta = mock(RepositorioPregunta.class);
+    ServicioExamen servicioExamen = new ServicioExamenImpl(repositorioExamen, repositorioPregunta);
 
     @Test
     public void dadoQueSiNoIngresoAlgunaOpcionALaHoraDeGenerarUnExamenMeTiraUnaException() {

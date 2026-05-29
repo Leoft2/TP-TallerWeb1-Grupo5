@@ -1,5 +1,5 @@
 package com.tallerwebi.dominio;
 
-public enum Lenguaje {
+public enum TipoLenguaje {
     JAVA, PYTHON, SQL
 }

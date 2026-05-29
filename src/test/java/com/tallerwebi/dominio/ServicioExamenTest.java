@@ -16,7 +16,7 @@ public class ServicioExamenTest {
     public void dadoQueSiNoIngresoAlgunaOpcionALaHoraDeGenerarUnExamenMeTiraUnaException() {
         givenExamenExistente();
         ExamenDto examenDto = new ExamenDto();
-        examenDto.setDificultad(Dificultad.BASICO);
+        examenDto.setDificultad(TipoDificultad.BASICO);
         examenDto.setLenguaje(null);
 
         assertThrows(OpcionInvalidaException.class, () -> servicioExamen.generarExamen(examenDto.getLenguaje(), examenDto.getDificultad()));

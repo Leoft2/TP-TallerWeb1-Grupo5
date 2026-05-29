@@ -2,8 +2,6 @@ package com.tallerwebi.dominio;
 
 import javax.persistence.*;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 public class Examen {
@@ -12,20 +10,16 @@ public class Examen {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    private Usuario idUsuario;
     private Integer puntaje;
-    private Dificultad dificultad;
-    private Lenguaje lenguaje;
+    private TipoDificultad dificultad;
+    private TipoLenguaje lenguaje;
     private LocalTime tiempoInicio;
     private LocalTime tiempoFinal;
 
-    //@Transient no la gurada en la base de datos, pero si en memoria para poder usarla
-    @Transient
-    private List<String> respuestas = new ArrayList<>();
-
-    @Transient
-    private List<Long> preguntaIds = new ArrayList<>();
+    @ManyToOne
+    private Usuario idUsuario;
+    @ManyToOne
+    private Respuesta respuesta;
 
     public Long getId() {
         return id;
@@ -43,19 +37,19 @@ public class Examen {
         this.idUsuario = idUsuario;
     }
 
-    public Dificultad getDificultad() {
+    public TipoDificultad getDificultad() {
         return dificultad;
     }
 
-    public void setDificultad(Dificultad dificultad) {
+    public void setDificultad(TipoDificultad dificultad) {
         this.dificultad = dificultad;
     }
 
-    public Lenguaje getLenguaje() {
+    public TipoLenguaje getLenguaje() {
         return lenguaje;
     }
 
-    public void setLenguaje(Lenguaje lenguaje) {
+    public void setLenguaje(TipoLenguaje lenguaje) {
         this.lenguaje = lenguaje;
     }
 
@@ -83,19 +77,11 @@ public class Examen {
         this.tiempoFinal = tiempoFinal;
     }
 
-    public List<String> getRespuestas() {
-        return respuestas;
+    public Respuesta getRespuesta() {
+        return respuesta;
     }
 
-    public void setRespuestas(List<String> respuestas) {
-        this.respuestas = respuestas;
-    }
-
-    public List<Long> getPreguntaIds() {
-        return preguntaIds;
-    }
-
-    public void setPreguntaIds(List<Long> preguntaIds) {
-        this.preguntaIds = preguntaIds;
+    public void setRespuesta(Respuesta respuesta) {
+        this.respuesta = respuesta;
     }
 }

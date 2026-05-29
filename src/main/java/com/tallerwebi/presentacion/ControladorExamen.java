@@ -1,9 +1,9 @@
 package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.*;
+
 import java.time.LocalTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import com.tallerwebi.dominio.excepcion.OpcionInvalidaException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,28 +34,22 @@ public class ControladorExamen {
     @RequestMapping(path = "/examen", method = RequestMethod.POST)
     public ModelAndView generarExamen(@ModelAttribute("examenDto") ExamenDto examenDto) {
         ModelMap model = new ModelMap();
-
-        List<Pregunta> preguntas = null;
+        Examen examen = new Examen();
 
         try {
-             preguntas = servicioExamen.generarExamen(
-                    examenDto.getLenguaje(), examenDto.getDificultad()
-            );
-            model.put("preguntas", preguntas);
+            Pregunta pregunta = servicioExamen.generarExamen(examenDto.getLenguaje(), examenDto.getDificultad());
+            model.put("preguntas", pregunta);
+            Respuesta respuestas = new Respuesta();
+            respuestas.setPregunta(pregunta);
+            model.put("respuestas", respuestas);
         } catch (OpcionInvalidaException e) {
             model.put("error", "Debe elegir las opciones");
             return new ModelAndView("examenes", model);
         }
 
-        Examen examen = new Examen();
         examen.setTiempoInicio(LocalTime.now());
         examen.setDificultad(examenDto.getDificultad());
         examen.setLenguaje(examenDto.getLenguaje());
-
-        List<Long> ids = preguntas.stream()
-                .map(Pregunta::getId)
-                .collect(Collectors.toList());
-        examen.setPreguntaIds(ids);
 
         model.put("examen", examen);
         model.put("generado", "El examen se genero correctamente");
@@ -64,10 +58,6 @@ public class ControladorExamen {
 
     @RequestMapping(path = "/guardar-examen", method = RequestMethod.POST)
     public ModelAndView guardarExamen(@ModelAttribute("examen") Examen examen) {
-
-        System.out.println("Respuestas: " + examen.getRespuestas());
-        System.out.println("IDs: " + examen.getPreguntaIds());
-
         Integer puntaje = servicioExamen.calcularPuntaje(examen);
         examen.setTiempoFinal(LocalTime.now());
         examen.setPuntaje(puntaje);

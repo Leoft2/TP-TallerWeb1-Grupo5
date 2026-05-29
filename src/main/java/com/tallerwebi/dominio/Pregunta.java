@@ -1,9 +1,6 @@
 package com.tallerwebi.dominio;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Pregunta {
@@ -12,8 +9,8 @@ public class Pregunta {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Lenguaje lenguaje;
-    private Dificultad dificultad;
+    private TipoLenguaje lenguaje;
+    private TipoDificultad dificultad;
     private String consigna;
     private String opcionA;
     private String opcionB;
@@ -28,19 +25,19 @@ public class Pregunta {
         this.id = id;
     }
 
-    public Dificultad getDificultad() {
+    public TipoDificultad getDificultad() {
         return dificultad;
     }
 
-    public void setDificultad(Dificultad dificultad) {
+    public void setDificultad(TipoDificultad dificultad) {
         this.dificultad = dificultad;
     }
 
-    public Lenguaje getLenguaje() {
+    public TipoLenguaje getLenguaje() {
         return lenguaje;
     }
 
-    public void setLenguaje(Lenguaje lenguaje) {
+    public void setLenguaje(TipoLenguaje lenguaje) {
         this.lenguaje = lenguaje;
     }
 
@@ -50,22 +47,6 @@ public class Pregunta {
 
     public void setRespuestaCorrecta(String respuestaCorrecta) {
         this.respuestaCorrecta = respuestaCorrecta;
-    }
-
-    public String getOpcionC() {
-        return opcionC;
-    }
-
-    public void setOpcionC(String opcionC) {
-        this.opcionC = opcionC;
-    }
-
-    public String getOpcionB() {
-        return opcionB;
-    }
-
-    public void setOpcionB(String opcionB) {
-        this.opcionB = opcionB;
     }
 
     public String getConsigna() {
@@ -82,5 +63,21 @@ public class Pregunta {
 
     public void setOpcionA(String opcionA) {
         this.opcionA = opcionA;
+    }
+
+    public String getOpcionB() {
+        return opcionB;
+    }
+
+    public void setOpcionB(String opcionB) {
+        this.opcionB = opcionB;
+    }
+
+    public String getOpcionC() {
+        return opcionC;
+    }
+
+    public void setOpcionC(String opcionC) {
+        this.opcionC = opcionC;
     }
 }

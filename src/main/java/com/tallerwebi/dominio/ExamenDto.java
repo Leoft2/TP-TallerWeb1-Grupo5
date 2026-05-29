@@ -2,22 +2,22 @@ package com.tallerwebi.dominio;
 
 public class ExamenDto {
 
-  private Dificultad dificultad;
-  private Lenguaje lenguaje;
+  private TipoDificultad dificultad;
+  private TipoLenguaje lenguaje;
 
-    public Dificultad getDificultad() {
+    public TipoDificultad getDificultad() {
         return dificultad;
     }
 
-    public void setDificultad(Dificultad dificultad) {
+    public void setDificultad(TipoDificultad dificultad) {
         this.dificultad = dificultad;
     }
 
-    public Lenguaje getLenguaje() {
+    public TipoLenguaje getLenguaje() {
         return lenguaje;
     }
 
-    public void setLenguaje(Lenguaje lenguaje) {
+    public void setLenguaje(TipoLenguaje lenguaje) {
         this.lenguaje = lenguaje;
     }
 }

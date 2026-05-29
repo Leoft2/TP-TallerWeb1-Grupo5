@@ -1,5 +1,5 @@
 package com.tallerwebi.dominio;
 
-public enum Dificultad {
+public enum TipoDificultad {
     BASICO, MEDIO, DIFICIL
 }

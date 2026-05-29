@@ -21,7 +21,7 @@ public class ServicioExamenImpl implements ServicioExamen {
     }
 
     @Override
-    public List<Pregunta> generarExamen(Lenguaje lenguaje, Dificultad dificultad) {
+    public Pregunta generarExamen(TipoLenguaje lenguaje, TipoDificultad dificultad) {
         if (lenguaje == null || dificultad == null) {
             throw new OpcionInvalidaException();
         }
@@ -32,23 +32,11 @@ public class ServicioExamenImpl implements ServicioExamen {
     @Override
     public Integer calcularPuntaje(Examen examen) {
         int puntaje = 0;
-        List<Long> ids = examen.getPreguntaIds();
-        List<String> respuestas = examen.getRespuestas();
-
-        for (int i = 0; i < ids.size(); i++) {
-            Pregunta pregunta = repositorioPregunta.buscarPorId(ids.get(i));
-            String respuestaUsuario = respuestas.get(i);
-
-            if (pregunta.getRespuestaCorrecta()
-                    .equalsIgnoreCase(respuestaUsuario)) {
-                puntaje++;
-            }
-        }
 
         return puntaje;
     }
 
-    public Integer puntajePorDificultad(Integer puntaje, Dificultad dificultad) {
+    public Integer puntajePorDificultad(Integer puntaje, TipoDificultad dificultad) {
         Integer puntajeUsuario = puntaje;
         Integer puntajeFinal = 0;
 

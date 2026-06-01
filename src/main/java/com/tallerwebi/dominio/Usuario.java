@@ -63,7 +63,7 @@ public class Usuario {
     activo = true;
   }
 
-  public int getPuntaje() {
+  public Integer getPuntaje() {
     return puntaje;
   }
 

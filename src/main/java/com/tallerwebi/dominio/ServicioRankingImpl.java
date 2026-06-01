@@ -29,7 +29,8 @@ public class ServicioRankingImpl implements ServicioRanking {
     }
 
     List<Usuario> usuariosOrdenables = new ArrayList<>(usuariosOriginales);
-    usuariosOrdenables.sort(Comparator.comparing(Usuario::getPuntaje).reversed());
-    return usuariosOrdenables;
+      usuariosOrdenables.sort(
+              Comparator.comparing(Usuario::getPuntaje, Comparator.nullsLast(Comparator.reverseOrder()))
+      );    return usuariosOrdenables;
   }
 }

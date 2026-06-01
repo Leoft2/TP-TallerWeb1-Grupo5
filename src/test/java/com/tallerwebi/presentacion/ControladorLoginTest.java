@@ -6,6 +6,7 @@ import static org.hamcrest.text.IsEqualIgnoringCase.equalToIgnoringCase;
 import static org.mockito.Mockito.*;
 
 import com.tallerwebi.dominio.ServicioLogin;
+import com.tallerwebi.dominio.ServicioRanking;
 import com.tallerwebi.dominio.Usuario;
 import com.tallerwebi.dominio.excepcion.UsuarioExistente;
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +23,7 @@ public class ControladorLoginTest {
   private HttpServletRequest requestMock;
   private HttpSession sessionMock;
   private ServicioLogin servicioLoginMock;
+  private ServicioRanking servicioRankingMock;
 
   @BeforeEach
   public void init() {
@@ -31,7 +33,9 @@ public class ControladorLoginTest {
     requestMock = mock(HttpServletRequest.class);
     sessionMock = mock(HttpSession.class);
     servicioLoginMock = mock(ServicioLogin.class);
-    controladorLogin = new ControladorLogin(servicioLoginMock);
+    servicioRankingMock = mock(ServicioRanking.class);
+    controladorLogin = new ControladorLogin(servicioLoginMock, servicioRankingMock);
+    when(requestMock.getSession()).thenReturn(sessionMock);
   }
 
   @Test
@@ -150,4 +154,19 @@ public class ControladorLoginTest {
     // validacion
     assertThat(modelAndView.getViewName(), equalToIgnoringCase("redirect:/login"));
   }
+
+
+    @Test
+    public void dadoQueElUsuarioRegistradoComoRolJuniorAlLogearseLeVaMostrarSuPosicionEnElRanking() {
+        //Preparacion
+        Usuario usuario = new Usuario();
+        usuario.setRol("junior");
+        when(requestMock.getSession().getAttribute("usuario"))
+                .thenReturn(usuario);
+        //ejecucion
+        ModelAndView model = controladorLogin.vistaRol(requestMock);
+        //validacion
+        assertThat(model.getViewName(), equalToIgnoringCase("home-junior"));
+        assertThat(model.getModel().get("usuario"), instanceOf(Usuario.class));
+    }
 }

@@ -163,6 +163,7 @@ public class ControladorLoginTest {
         usuario.setRol("junior");
         when(requestMock.getSession().getAttribute("usuario"))
                 .thenReturn(usuario);
+        when(servicioLoginMock.buscarUsuarioPorRankingGeneral(any(), any())).thenReturn(usuario);
         //ejecucion
         ModelAndView model = controladorLogin.vistaRol(requestMock);
         //validacion

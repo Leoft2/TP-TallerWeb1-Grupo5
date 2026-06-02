@@ -4,10 +4,18 @@ import com.tallerwebi.dominio.*;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class RespositorioExamenImpl implements RepositorioExamen {
+
+  SessionFactory sessionFactory;
+
+  public RespositorioExamenImpl(SessionFactory sessionFactory) {
+      this.sessionFactory = sessionFactory;
+  }
 
   @Override
   public List<Pregunta> buscarExamenPorLenguajeYDificultad(Lenguaje lenguaje, Dificultad dificultad) {
@@ -121,6 +129,6 @@ public class RespositorioExamenImpl implements RepositorioExamen {
 
   @Override
   public void guardarExamen(Examen examen) {
-      //Query para completar
+    sessionFactory.getCurrentSession().save(examen);
   }
 }

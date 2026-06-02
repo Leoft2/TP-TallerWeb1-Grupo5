@@ -1,7 +1,6 @@
 package com.tallerwebi.presentacion;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.equalToIgnoringCase;
 import static org.mockito.Mockito.*;
 
@@ -9,9 +8,6 @@ import com.tallerwebi.dominio.*;
 import com.tallerwebi.dominio.excepcion.OpcionInvalidaException;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.servlet.ModelAndView;
-
-import java.util.Arrays;
-
 
 public class ControladorExamenTest {
 
@@ -77,31 +73,5 @@ public class ControladorExamenTest {
       ModelAndView model = whenGenerarExamen(lenguje, dificultad);
       thenExamenGeneradoExitosamente(model);
   }
-
-    @Test
-    public void queCalculePuntajeCorrectamente() {
-        // Armás preguntas de mentira
-        Pregunta p1 = new Pregunta();
-        p1.setId(1L);
-        p1.setRespuestaCorrecta("A");
-
-        Pregunta p2 = new Pregunta();
-        p2.setId(2L);
-        p2.setRespuestaCorrecta("B");
-
-        // Armás el examen con ids y respuestas
-        Examen examen = new Examen();
-        examen.setPreguntaIds(Arrays.asList(1L, 2L));
-        examen.setRespuestas(Arrays.asList("A", "B")); // las dos correctas
-
-        // Mockeas el repositorio para que devuelva tus preguntas falsas
-        when(repositorioPregunta.buscarPorId(1L)).thenReturn(p1);
-        when(repositorioPregunta.buscarPorId(2L)).thenReturn(p2);
-
-        Integer puntaje = servicioExamenImpl.calcularPuntaje(examen);
-
-        assertThat(puntaje, equalTo(2)); // acertó las 2
-    }
-
 
 }

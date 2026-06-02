@@ -3,7 +3,6 @@ package com.tallerwebi.presentacion;
 import com.tallerwebi.dominio.*;
 import java.time.LocalTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import com.tallerwebi.dominio.excepcion.OpcionInvalidaException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,11 +51,6 @@ public class ControladorExamen {
         examen.setDificultad(examenDto.getDificultad());
         examen.setLenguaje(examenDto.getLenguaje());
 
-        List<Long> ids = preguntas.stream()
-                .map(Pregunta::getId)
-                .collect(Collectors.toList());
-        examen.setPreguntaIds(ids);
-
         model.put("examen", examen);
         model.put("generado", "El examen se genero correctamente");
         return new ModelAndView("examen-generado", model);
@@ -64,9 +58,6 @@ public class ControladorExamen {
 
     @RequestMapping(path = "/guardar-examen", method = RequestMethod.POST)
     public ModelAndView guardarExamen(@ModelAttribute("examen") Examen examen) {
-
-        System.out.println("Respuestas: " + examen.getRespuestas());
-        System.out.println("IDs: " + examen.getPreguntaIds());
 
         Integer puntaje = servicioExamen.calcularPuntaje(examen);
         examen.setTiempoFinal(LocalTime.now());

@@ -1,25 +1,30 @@
 package com.tallerwebi.infraestructura;
 
-import com.tallerwebi.dominio.Examen;
-import com.tallerwebi.dominio.Pregunta;
-import com.tallerwebi.dominio.RepositorioExamen;
+import com.tallerwebi.dominio.*;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class RespositorioExamenImpl implements RepositorioExamen {
 
-  private static final String DIFICULTAD_BASICO = "basico";
+  SessionFactory sessionFactory;
+
+  public RespositorioExamenImpl(SessionFactory sessionFactory) {
+      this.sessionFactory = sessionFactory;
+  }
 
   @Override
-  public List<Pregunta> buscarExamenPorLenguajeYDificultad(String lenguaje, String dificultad) {
+  public List<Pregunta> buscarExamenPorLenguajeYDificultad(Lenguaje lenguaje, Dificultad dificultad) {
     List<Pregunta> preguntas = new ArrayList<>();
 
     // ─── JAVA ────────────────────────────────────────────
     Pregunta p1 = new Pregunta();
-    p1.setLenguaje("Java");
-    p1.setDificultad(dificultad);
+    p1.setLenguaje(Lenguaje.JAVA);
+    p1.setDificultad(Dificultad.BASICO);
     p1.setConsigna("¿Qué es la herencia en Java?");
     p1.setOpcionA("Copiar código de otra clase");
     p1.setOpcionB("Una clase que hereda atributos y métodos de otra");
@@ -28,8 +33,8 @@ public class RespositorioExamenImpl implements RepositorioExamen {
     preguntas.add(p1);
 
     Pregunta p2 = new Pregunta();
-    p2.setLenguaje("Java");
-    p2.setDificultad(DIFICULTAD_BASICO);
+    p2.setLenguaje(Lenguaje.JAVA);
+    p2.setDificultad(Dificultad.BASICO);
     p2.setConsigna("¿Cuál es el tipo de dato para números enteros en Java?");
     p2.setOpcionA("float");
     p2.setOpcionB("String");
@@ -38,8 +43,8 @@ public class RespositorioExamenImpl implements RepositorioExamen {
     preguntas.add(p2);
 
     Pregunta p3 = new Pregunta();
-    p3.setLenguaje("Java");
-    p3.setDificultad("medio");
+    p3.setLenguaje(Lenguaje.JAVA);
+    p3.setDificultad(Dificultad.MEDIO);
     p3.setConsigna("¿Qué hace la palabra reservada static?");
     p3.setOpcionA("Hace que una variable no se pueda modificar");
     p3.setOpcionB("Hace que una clase sea abstracta");
@@ -49,8 +54,8 @@ public class RespositorioExamenImpl implements RepositorioExamen {
 
     // ─── PYTHON ──────────────────────────────────────────
     Pregunta p4 = new Pregunta();
-    p4.setLenguaje("Python");
-    p4.setDificultad(DIFICULTAD_BASICO);
+    p4.setLenguaje(Lenguaje.PYTHON);
+    p4.setDificultad(Dificultad.MEDIO);
     p4.setConsigna("¿Cómo se define una función en Python?");
     p4.setOpcionA("function miFuncion()");
     p4.setOpcionB("def miFuncion():");
@@ -59,8 +64,8 @@ public class RespositorioExamenImpl implements RepositorioExamen {
     preguntas.add(p4);
 
     Pregunta p5 = new Pregunta();
-    p5.setLenguaje("Python");
-    p5.setDificultad(DIFICULTAD_BASICO);
+    p5.setLenguaje(Lenguaje.PYTHON);
+    p5.setDificultad(Dificultad.BASICO);
     p5.setConsigna("¿Qué tipo de dato es [1, 2, 3] en Python?");
     p5.setOpcionA("Tupla");
     p5.setOpcionB("Diccionario");
@@ -69,8 +74,8 @@ public class RespositorioExamenImpl implements RepositorioExamen {
     preguntas.add(p5);
 
     Pregunta p6 = new Pregunta();
-    p6.setLenguaje("Python");
-    p6.setDificultad("medio");
+    p6.setLenguaje(Lenguaje.PYTHON);
+    p6.setDificultad(Dificultad.MEDIO);
     p6.setConsigna("¿Qué hace el método append() en una lista?");
     p6.setOpcionA("Elimina el último elemento");
     p6.setOpcionB("Agrega un elemento al final de la lista");
@@ -80,8 +85,8 @@ public class RespositorioExamenImpl implements RepositorioExamen {
 
     // ─── SQL ─────────────────────────────────────────────
     Pregunta p7 = new Pregunta();
-    p7.setLenguaje("SQL");
-    p7.setDificultad(DIFICULTAD_BASICO);
+    p7.setLenguaje(Lenguaje.SQL);
+    p7.setDificultad(Dificultad.BASICO);
     p7.setConsigna("¿Qué hace la sentencia SELECT en SQL?");
     p7.setOpcionA("Elimina registros de una tabla");
     p7.setOpcionB("Inserta nuevos registros");
@@ -90,8 +95,8 @@ public class RespositorioExamenImpl implements RepositorioExamen {
     preguntas.add(p7);
 
     Pregunta p8 = new Pregunta();
-    p8.setLenguaje("SQL");
-    p8.setDificultad(DIFICULTAD_BASICO);
+    p8.setLenguaje(Lenguaje.SQL);
+    p8.setDificultad(Dificultad.BASICO);
     p8.setConsigna("¿Qué cláusula se usa para filtrar registros en SQL?");
     p8.setOpcionA("WHERE");
     p8.setOpcionB("ORDER BY");
@@ -100,8 +105,8 @@ public class RespositorioExamenImpl implements RepositorioExamen {
     preguntas.add(p8);
 
     Pregunta p9 = new Pregunta();
-    p9.setLenguaje("SQL");
-    p9.setDificultad("medio");
+    p9.setLenguaje(Lenguaje.SQL);
+    p9.setDificultad(Dificultad.MEDIO);
     p9.setConsigna("¿Qué hace un INNER JOIN?");
     p9.setOpcionA("Devuelve todos los registros de ambas tablas");
     p9.setOpcionB("Devuelve solo los registros que tienen coincidencia en ambas tablas");
@@ -113,7 +118,7 @@ public class RespositorioExamenImpl implements RepositorioExamen {
 
     for (Pregunta p : preguntas) {
       if (
-        p.getLenguaje().equalsIgnoreCase(lenguaje) && p.getDificultad().equalsIgnoreCase(dificultad)
+        p.getLenguaje().equals(lenguaje) && p.getDificultad().equals(dificultad)
       ) {
         listaParaEnviar.add(p);
       }
@@ -124,6 +129,6 @@ public class RespositorioExamenImpl implements RepositorioExamen {
 
   @Override
   public void guardarExamen(Examen examen) {
-      //Query para completar
+    sessionFactory.getCurrentSession().save(examen);
   }
 }

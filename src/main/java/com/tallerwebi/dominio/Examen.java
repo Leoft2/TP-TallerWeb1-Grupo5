@@ -1,10 +1,9 @@
 package com.tallerwebi.dominio;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Examen {
@@ -13,12 +12,20 @@ public class Examen {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long idReclutador;
+    @ManyToOne
+    private Usuario idUsuario;
     private Integer puntaje;
-    private String dificultad;
-    private String lenguaje;
+    private Dificultad dificultad;
+    private Lenguaje lenguaje;
     private LocalTime tiempoInicio;
     private LocalTime tiempoFinal;
+
+    //@Transient no la gurada en la base de datos, pero si en memoria para poder usarla
+    @Transient
+    private List<String> respuestas = new ArrayList<>();
+
+    @Transient
+    private List<Long> preguntaIds = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -28,20 +35,28 @@ public class Examen {
         this.id = id;
     }
 
-    public Long getIdReclutador() {
-        return idReclutador;
+    public Usuario getIdUsuario() {
+        return idUsuario;
     }
 
-    public void setIdReclutador(Long idReclutador) {
-        this.idReclutador = idReclutador;
+    public void setIdUsuario(Usuario idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
-    public String getDificultad() {
+    public Dificultad getDificultad() {
         return dificultad;
     }
 
-    public void setDificultad(String dificultad) {
+    public void setDificultad(Dificultad dificultad) {
         this.dificultad = dificultad;
+    }
+
+    public Lenguaje getLenguaje() {
+        return lenguaje;
+    }
+
+    public void setLenguaje(Lenguaje lenguaje) {
+        this.lenguaje = lenguaje;
     }
 
     public Integer getPuntaje() {
@@ -60,19 +75,27 @@ public class Examen {
         this.tiempoInicio = tiempoInicio;
     }
 
-    public String getLenguaje() {
-        return lenguaje;
-    }
-
-    public void setLenguaje(String lenguaje) {
-        this.lenguaje = lenguaje;
-    }
-
     public LocalTime getTiempoFinal() {
         return tiempoFinal;
     }
 
     public void setTiempoFinal(LocalTime tiempoFinal) {
         this.tiempoFinal = tiempoFinal;
+    }
+
+    public List<String> getRespuestas() {
+        return respuestas;
+    }
+
+    public void setRespuestas(List<String> respuestas) {
+        this.respuestas = respuestas;
+    }
+
+    public List<Long> getPreguntaIds() {
+        return preguntaIds;
+    }
+
+    public void setPreguntaIds(List<Long> preguntaIds) {
+        this.preguntaIds = preguntaIds;
     }
 }

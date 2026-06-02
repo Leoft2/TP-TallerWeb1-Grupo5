@@ -12,8 +12,8 @@ public class Pregunta {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String lenguaje;
-    private String dificultad;
+    private Lenguaje lenguaje;
+    private Dificultad dificultad;
     private String consigna;
     private String opcionA;
     private String opcionB;
@@ -28,20 +28,20 @@ public class Pregunta {
         this.id = id;
     }
 
-    public String getLenguaje() {
-        return lenguaje;
-    }
-
-    public void setLenguaje(String lenguaje) {
-        this.lenguaje = lenguaje;
-    }
-
-    public String getDificultad() {
+    public Dificultad getDificultad() {
         return dificultad;
     }
 
-    public void setDificultad(String dificultad) {
+    public void setDificultad(Dificultad dificultad) {
         this.dificultad = dificultad;
+    }
+
+    public Lenguaje getLenguaje() {
+        return lenguaje;
+    }
+
+    public void setLenguaje(Lenguaje lenguaje) {
+        this.lenguaje = lenguaje;
     }
 
     public String getRespuestaCorrecta() {

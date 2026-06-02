@@ -1,14 +1,20 @@
--- Archivo reservado para futuras precargas
--- SELECT 1;
+INSERT INTO Usuario(id, email, password, rol, activo) VALUES(null, 'test@unlam.edu.ar', 'test', 'ADMIN', true);
+INSERT INTO usuario (nombreUsuario, email, password, rol, activo, puntaje)VALUES ('juanperez', 'juan@gmail.com', '1234', 'junior', true, 75);
 
--- Insertamos 10 usuarios de prueba para el Ranking General
-INSERT INTO Usuario (email, password, rol, activo, nombreUsuario, puntaje) VALUES ('user1@test.com', '1234', 'USER', true, 'BugHunter', 1500);
-INSERT INTO Usuario (email, password, rol, activo, nombreUsuario, puntaje) VALUES ('user2@test.com', '1234', 'USER', true, 'DebugQueen', 1340);
-INSERT INTO Usuario (email, password, rol, activo, nombreUsuario, puntaje) VALUES ('user3@test.com', '1234', 'USER', true, 'DevMaster', 1200);
-INSERT INTO Usuario (email, password, rol, activo, nombreUsuario, puntaje) VALUES ('user4@test.com', '1234', 'USER', true, 'RefactorKing', 1050);
-INSERT INTO Usuario (email, password, rol, activo, nombreUsuario, puntaje) VALUES ('user5@test.com', '1234', 'USER', true, 'CodeNinja', 950);
-INSERT INTO Usuario (email, password, rol, activo, nombreUsuario, puntaje) VALUES ('user6@test.com', '1234', 'USER', true, 'ByteMe', 800);
-INSERT INTO Usuario (email, password, rol, activo, nombreUsuario, puntaje) VALUES ('user7@test.com', '1234', 'USER', true, 'CtrlAltDefeat', 650);
-INSERT INTO Usuario (email, password, rol, activo, nombreUsuario, puntaje) VALUES ('user8@test.com', '1234', 'USER', true, 'juanSpec', 420);
-INSERT INTO Usuario (email, password, rol, activo, nombreUsuario, puntaje) VALUES ('user9@test.com', '1234', 'USER', true, 'ScriptKiddie', 300);
-INSERT INTO Usuario (email, password, rol, activo, nombreUsuario, puntaje) VALUES ('user10@test.com', '1234', 'USER', true, 'pedroDev', 110);
+INSERT INTO usuario (nombreUsuario, email, password, rol, activo, puntaje)VALUES ('mariasosa', 'maria@gmail.com', '1234', 'junior', true, 82);
+
+INSERT INTO usuario (nombreUsuario, email, password, rol, activo, puntaje)VALUES ('carloslopez', 'carlos@gmail.com', '1234', 'reclutador', true, 0);
+
+INSERT INTO usuario (nombreUsuario, email, password, rol, activo, puntaje)VALUES ('anagarcia', 'ana@gmail.com', '1234', 'junior', false, 60);
+
+INSERT INTO usuario (nombreUsuario, email, password, rol, activo, puntaje)VALUES ('pedrorodriguez', 'pedro@gmail.com', '1234', 'reclutador', true, 0);
+
+INSERT INTO usuario (nombreUsuario, email, password, rol, activo, puntaje)VALUES ('luciafernandez', 'lucia@gmail.com', '1234', 'junior', true, 91);
+
+INSERT INTO usuario (nombreUsuario, email, password, rol, activo, puntaje)VALUES ('diegomartinez', 'diego@gmail.com', '1234', 'junior', true, 68);
+
+INSERT INTO usuario (nombreUsuario, email, password, rol, activo, puntaje)VALUES ('sofiagomez', 'sofia@gmail.com', '1234', 'reclutador', true, 0);
+
+INSERT INTO usuario (nombreUsuario, email, password, rol, activo, puntaje)VALUES ('martinruiz', 'martin@gmail.com', '1234', 'junior', false, 55);
+
+INSERT INTO usuario (nombreUsuario, email, password, rol, activo, puntaje)VALUES ('valentinadiaz', 'valentina@gmail.com', '1234', 'junior', true, 88);

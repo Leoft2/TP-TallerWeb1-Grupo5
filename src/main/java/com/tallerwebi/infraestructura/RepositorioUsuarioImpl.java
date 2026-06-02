@@ -37,4 +37,9 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
         sessionFactory.getCurrentSession().update(usuario);
     }
 
+
+    @Override
+    public Usuario buscarUsuarioPorRol(String rol) {
+        return (Usuario) sessionFactory.getCurrentSession().createCriteria(Usuario.class).add(Restrictions.eq("junior", rol)).uniqueResult();
+    }
 }

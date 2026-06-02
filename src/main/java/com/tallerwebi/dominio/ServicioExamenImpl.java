@@ -2,6 +2,8 @@ package com.tallerwebi.dominio;
 
 import java.util.List;
 import javax.transaction.Transactional;
+
+import com.tallerwebi.dominio.excepcion.OpcionInvalidaException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,30 +11,67 @@ import org.springframework.stereotype.Service;
 @Transactional
 public class ServicioExamenImpl implements ServicioExamen {
 
-  RepositorioExamen repositorioExamen;
+    RepositorioExamen repositorioExamen;
+    RepositorioPregunta repositorioPregunta;
 
-  @Autowired
-  public ServicioExamenImpl(RepositorioExamen repositorioExamen) {
-    this.repositorioExamen = repositorioExamen;
-  }
-
-  @Override
-  public List<Pregunta> generarExamen(String lenguaje, String dificultad) {
-    if (lenguaje.isEmpty() || dificultad.isEmpty()) {
-      throw new OpcionInvalidaException();
+    @Autowired
+    public ServicioExamenImpl(RepositorioExamen repositorioExamen, RepositorioPregunta repositorioPregunta) {
+        this.repositorioExamen = repositorioExamen;
+        this.repositorioPregunta = repositorioPregunta;
     }
 
-    return repositorioExamen.buscarExamenPorLenguajeYDificultad(lenguaje, dificultad);
-  }
+    @Override
+    public List<Pregunta> generarExamen(Lenguaje lenguaje, Dificultad dificultad) {
+        if (lenguaje == null || dificultad == null) {
+            throw new OpcionInvalidaException();
+        }
 
-  @Override
-  public Integer calcularPuntaje(Examen examen) {
-    Integer puntajeFinal = 0;
-    return puntajeFinal;
-  }
+        return repositorioExamen.buscarExamenPorLenguajeYDificultad(lenguaje, dificultad);
+    }
 
-  @Override
-  public void guardarExamen(Examen examen) {
-    repositorioExamen.guardarExamen(examen);
-  }
+    @Override
+    public Integer calcularPuntaje(Examen examen) {
+        int puntaje = 0;
+        List<Long> ids = examen.getPreguntaIds();
+        List<String> respuestas = examen.getRespuestas();
+
+        for (int i = 0; i < ids.size(); i++) {
+            Pregunta pregunta = repositorioPregunta.buscarPorId(ids.get(i));
+            String respuestaUsuario = respuestas.get(i);
+
+            if (pregunta.getRespuestaCorrecta()
+                    .equalsIgnoreCase(respuestaUsuario)) {
+                puntaje++;
+            }
+        }
+
+        return puntaje;
+    }
+
+    public Integer puntajePorDificultad(Integer puntaje, Dificultad dificultad) {
+        Integer puntajeUsuario = puntaje;
+        Integer puntajeFinal = 0;
+
+        switch (dificultad) {
+            case BASICO:
+                puntajeFinal = puntajeUsuario * 2;
+                break;
+            case MEDIO:
+                puntajeFinal = puntajeUsuario * 3;
+                break;
+            case DIFICIL:
+                puntajeFinal = puntajeUsuario * 4;
+                break;
+            default:
+                puntajeFinal = puntaje;
+                break;
+        }
+
+        return puntajeFinal;
+    }
+
+    @Override
+    public void guardarExamen(Examen examen) {
+        repositorioExamen.guardarExamen(examen);
+    }
 }

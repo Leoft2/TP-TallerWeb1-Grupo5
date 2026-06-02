@@ -11,4 +11,5 @@ public interface RepositorioUsuario {
 
     void modificar(Usuario usuario);
 
+    Usuario buscarUsuarioPorRol(String rol);
 }

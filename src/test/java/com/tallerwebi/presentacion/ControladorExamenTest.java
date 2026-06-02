@@ -2,12 +2,10 @@ package com.tallerwebi.presentacion;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalToIgnoringCase;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.*;
 
-import com.tallerwebi.dominio.ExamenDto;
-import com.tallerwebi.dominio.OpcionInvalidaException;
-import com.tallerwebi.dominio.ServicioExamen;
+import com.tallerwebi.dominio.*;
+import com.tallerwebi.dominio.excepcion.OpcionInvalidaException;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -17,11 +15,14 @@ public class ControladorExamenTest {
     con un temporizador visible, donde si el tiempo llega a cero la prueba se cierra
     automáticamente y suma 0 puntos en esa pregunta.*/
 
-  private static final String lenguje = "java";
-  private static final String dificultad = "basico";
+  private static final Lenguaje lenguje = Lenguaje.JAVA;
+  private static final Dificultad dificultad = Dificultad.BASICO;
 
-  ServicioExamen servicioExamen = mock(ServicioExamen.class);
-  ControladorExamen controladorExamen = new ControladorExamen(servicioExamen);
+    ServicioExamen servicioExamen = mock(ServicioExamen.class);
+    RepositorioPregunta repositorioPregunta = mock(RepositorioPregunta.class);
+    RepositorioExamen repositorioExamen = mock(RepositorioExamen.class);
+    ServicioExamenImpl servicioExamenImpl = new ServicioExamenImpl(repositorioExamen, repositorioPregunta);
+    ControladorExamen controladorExamen = new ControladorExamen(servicioExamenImpl);
 
   @Test
   public void elExamenSeCreaSiIngresaElLenguajeYDificultadAdecuadoDeLasOpciones() {
@@ -38,7 +39,7 @@ public class ControladorExamenTest {
     );
   }
 
-  private ModelAndView whenGenerarExamen(String lenguaje, String dificultad) {
+  private ModelAndView whenGenerarExamen(Lenguaje lenguaje, Dificultad dificultad) {
     ExamenDto examenDto = new ExamenDto();
     examenDto.setLenguaje(lenguaje);
     examenDto.setDificultad(dificultad);
@@ -51,8 +52,8 @@ public class ControladorExamenTest {
   @Test
   public void dadoQueElUsuarioNoEligioLasOpcionesDeLenguajeODificultadLanzaOpcionInvalidaException() {
     givenUsuarioExistente();
-    doThrow(OpcionInvalidaException.class).when(servicioExamen).generarExamen("", "");
-    ModelAndView model = whenGenerarExamen("", "");
+    doThrow(OpcionInvalidaException.class).when(servicioExamen).generarExamen(null, null);
+    ModelAndView model = whenGenerarExamen(null, null);
     thenExamenNoGeneradoExitosamente(model);
   }
 
@@ -72,4 +73,5 @@ public class ControladorExamenTest {
       ModelAndView model = whenGenerarExamen(lenguje, dificultad);
       thenExamenGeneradoExitosamente(model);
   }
+
 }

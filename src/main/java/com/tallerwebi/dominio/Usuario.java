@@ -58,9 +58,9 @@ public class Usuario {
         this.activo = activo;
     }
 
-    public void activar() {
-        activo = true;
-    }
+  public void activar() {
+    activo = true;
+  }
 
     public Integer getPuntaje() {
         return puntaje;

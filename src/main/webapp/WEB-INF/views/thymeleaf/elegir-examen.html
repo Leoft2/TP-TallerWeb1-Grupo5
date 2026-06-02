@@ -69,19 +69,17 @@
     <label>Selecciona el Lenguaje:</label>
 
     <select th:field="*{lenguaje}">
-        <option value="" disabled selected>Lenguajes</option>
-        <option th:value="java">Java</option>
-        <option th:value="python">Python</option>
-        <option th:value="sql">SQL</option>
+        <option th:value="JAVA">Java</option>
+        <option th:value="PYTHON">Python</option>
+        <option th:value="SQL">SQL</option>
     </select>
 
     <label>Selecciona la dificultad:</label>
 
     <select th:field="*{dificultad}">
-        <option value="" disabled selected>Dificultad</option>
-        <option th:value="basico">Básico</option>
-        <option th:value="medio">Medio</option>
-        <option th:value="dificil">Difícil</option>
+        <option th:value="BASICO">Básico</option>
+        <option th:value="MEDIO">Medio</option>
+        <option th:value="DIFICIL">Difícil</option>
     </select>
 
     <button type="submit">Generar</button>

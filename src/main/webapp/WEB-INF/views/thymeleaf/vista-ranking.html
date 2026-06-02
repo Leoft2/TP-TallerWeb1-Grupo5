@@ -32,14 +32,12 @@
 
                     <div th:if="${#lists.isEmpty(listaCandidatos)}" class="alert alert-warning text-center mt-4">
                         <i class="bi bi-info-circle fs-4 d-block mb-2"></i>
-                        <strong>&iexcl;El ranking est&aacute; vac&iacute;o!</strong> Todav&iacute;a no hay candidatos registrados.
+                        <strong>&iexcl;El ranking est&aacute; vac&iacute;o!</strong> Todav&iacute;a no hay candidatos
+                        registrados.
                     </div>
 
                     <table th:unless="${#lists.isEmpty(listaCandidatos)}"
                            class="table table-striped table-hover table-bordered mt-4">
-                    </table>
-
-                    <table class="table table-striped table-hover table-bordered mt-4">
                         <thead>
                         <tr>
                             <th scope="col" class="text-center">Puesto</th>
@@ -52,7 +50,7 @@
 
                             <td class="text-center fw-bold align-middle" th:text="${iterStat.count}">1</td>
 
-                            <td class="align-middle" th:text="${candidato.nombreUsuario}">Nombre del Usuario</td>
+                            <td class="align-middle" th:text="${candidato.nombreUsuario ?: 'Usuario Anónimo'}">Nombre del Usuario</td>
 
                             <td class="text-center align-middle">
                                 <span class="badge bg-success fs-6" th:text="${candidato.puntaje} + ' pts'">0 pts</span>

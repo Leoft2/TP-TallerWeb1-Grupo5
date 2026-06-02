@@ -1,35 +1,32 @@
 package com.tallerwebi.dominio;
 
 import com.tallerwebi.dominio.excepcion.RankingNoDisponibleException;
-import com.tallerwebi.infraestructura.RepositorioUsuario;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import javax.transaction.Transactional;
+import com.tallerwebi.infraestructura.RepositorioUsuarioB;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 @Transactional
 public class ServicioRankingImpl implements ServicioRanking {
 
-  RepositorioUsuario repositorioUsuario;
+    RepositorioUsuarioB repositorioUsuario;
 
-  @Autowired
-  public ServicioRankingImpl(RepositorioUsuario repositorioUsuario) {
-    this.repositorioUsuario = repositorioUsuario;
-  }
-
-  @Override
-  public List<Usuario> obtenerRankingGeneral() {
-    List<Usuario> usuariosOriginales = repositorioUsuario.obtenerTodosLosUsuarios();
-
-    if (usuariosOriginales == null) {
-      throw new RankingNoDisponibleException();
+    @Autowired
+    public ServicioRankingImpl(RepositorioUsuarioB repositorioUsuario) {
+        this.repositorioUsuario = repositorioUsuario;
     }
 
-    List<Usuario> usuariosOrdenables = new ArrayList<>(usuariosOriginales);
-    usuariosOrdenables.sort(Comparator.comparing(Usuario::getPuntaje).reversed());
-    return usuariosOrdenables;
-  }
+    @Override
+    public List<Usuario> obtenerRankingGeneral() {
+        List<Usuario> rankingOrdenado = repositorioUsuario.obtenerRankingGeneral();
+
+        if (rankingOrdenado == null) {
+            throw new RankingNoDisponibleException();
+        }
+
+        return rankingOrdenado;
+    }
 }

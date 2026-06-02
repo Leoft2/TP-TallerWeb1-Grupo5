@@ -90,14 +90,15 @@ public class ControladorLogin {
   @RequestMapping(path = "inicio-usuario", method = RequestMethod.GET)
   public ModelAndView vistaRol(HttpServletRequest request){
       ModelMap model = new ModelMap();
-//    Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
-      Usuario usuario = new Usuario();
-      usuario.setId(3L);
+      Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
 
-//    if (usuario == null) {
-//        model.put("error", "usuario no registrado");
-//        return new ModelAndView("redirect:/login");
-//    }
+//      Usuario usuario = new Usuario();
+//      usuario.setId(3L);
+
+    if (usuario == null) {
+        model.put("error", "usuario no registrado");
+        return new ModelAndView("redirect:/login");
+    }
 
       List<Usuario> listaUsuarios = servicioRanking.obtenerRankingGeneral();
       Usuario usuarioEncontrado = servicioLogin.buscarUsuarioPorRankingGeneral(listaUsuarios, usuario.getId());

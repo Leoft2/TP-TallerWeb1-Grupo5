@@ -1,7 +1,6 @@
 package com.tallerwebi.infraestructura;
 
 import com.tallerwebi.dominio.Usuario;
-import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -50,24 +49,6 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
 
   @Override
   public List<Usuario> obtenerTodosLosUsuarios() {
-//    List<Usuario> usuariosFalsos = new ArrayList<>();
-
-//    Usuario u1 = new Usuario();
-//    u1.setNombreUsuario("juan22");
-//    u1.setPuntaje(100);
-//
-//    Usuario u2 = new Usuario();
-//    u2.setNombreUsuario("pedro44");
-//    u2.setPuntaje(60);
-//
-//    Usuario u3 = new Usuario();
-//    u3.setNombreUsuario("leoft2");
-//    u3.setPuntaje(20);
-//
-//    usuariosFalsos.add(u3);
-//    usuariosFalsos.add(u1);
-//    usuariosFalsos.add(u2);
-
     return sessionFactory.getCurrentSession().createCriteria(Usuario.class).list();
   }
 

@@ -6,6 +6,8 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service("servicioLogin")
 @Transactional
 public class ServicioLoginImpl implements ServicioLogin {
@@ -33,4 +35,21 @@ public class ServicioLoginImpl implements ServicioLogin {
     }
     repositorioUsuario.guardar(usuario);
   }
+
+    @Override
+    public Usuario buscarUsarioPorRol(String rol) {
+        return repositorioUsuario.buscarUsuarioPorRol(rol);
+    }
+
+    @Override
+    public Usuario buscarUsuarioPorRankingGeneral(List<Usuario> listaUsuarios, Long id) {
+        Usuario usuarioBuscado = null;
+
+        for (Usuario usuarios : listaUsuarios) {
+            if (usuarios.getId().equals(id)) {
+                usuarioBuscado = usuarios;
+            }
+        }
+        return usuarioBuscado;
+    }
 }

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Mi Perfil</title>
+
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body{
+            background: linear-gradient(135deg,#0f172a,#1e293b);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+        }
+
+        .perfil-card{
+            width: 100%;
+            max-width: 700px;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .perfil-header{
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .avatar{
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: #2563eb;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: auto;
+            font-size: 40px;
+            font-weight: bold;
+        }
+
+        .perfil-header h2{
+            margin-top: 15px;
+            color: #1e293b;
+        }
+
+        .perfil-header p{
+            color: #64748b;
+        }
+
+        table{
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th{
+            background: #2563eb;
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+
+        td{
+            padding: 15px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        tr:hover{
+            background: #f8fafc;
+        }
+
+        .puntaje{
+            font-weight: bold;
+            color: #16a34a;
+        }
+    </style>
+</head>
+<body>
+
+<div class="perfil-card">
+
+    <div class="perfil-header">
+
+        <div class="avatar">
+            <span th:text="${#strings.substring(usuario.nombreUsuario,0,1).toUpperCase()}">
+                U
+            </span>
+        </div>
+
+        <h2 th:text="${usuario.nombreUsuario}"></h2>
+        <p>Perfil de Usuario</p>
+
+    </div>
+
+    <table>
+
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Usuario</th>
+            <th>Puntaje</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr>
+            <td th:text="${usuario.id}"></td>
+            <td th:text="${usuario.nombreUsuario}"></td>
+            <td class="puntaje" th:text="${usuario.puntaje}"></td>
+        </tr>
+        </tbody>
+
+    </table>
+
+</div>
+
+</body>
+</html>

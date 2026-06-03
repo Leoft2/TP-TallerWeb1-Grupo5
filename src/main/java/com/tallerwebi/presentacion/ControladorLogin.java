@@ -1,9 +1,11 @@
 package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.ServicioLogin;
+import com.tallerwebi.dominio.ServicioRanking;
 import com.tallerwebi.dominio.Usuario;
 import com.tallerwebi.dominio.excepcion.UsuarioExistente;
 import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -12,14 +14,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
+
 @Controller
 public class ControladorLogin {
 
   private ServicioLogin servicioLogin;
+  private ServicioRanking servicioRanking;
 
   @Autowired
-  public ControladorLogin(ServicioLogin servicioLogin) {
+  public ControladorLogin(ServicioLogin servicioLogin, ServicioRanking servicioRanking) {
     this.servicioLogin = servicioLogin;
+    this.servicioRanking = servicioRanking;
   }
 
   @RequestMapping("/login")
@@ -79,5 +85,24 @@ public class ControladorLogin {
   @RequestMapping(path = "/", method = RequestMethod.GET)
   public ModelAndView inicio() {
     return new ModelAndView("redirect:/login");
+  }
+
+  @RequestMapping(path = "inicio-usuario", method = RequestMethod.GET)
+  public ModelAndView vistaRol(HttpServletRequest request){
+      ModelMap model = new ModelMap();
+//    Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
+
+      Usuario usuario = new Usuario();
+      usuario.setId(3L);
+
+//    if (usuario == null) {
+//        model.put("error", "usuario no registrado");
+//        return new ModelAndView("redirect:/login");
+//    }
+
+      List<Usuario> listaUsuarios = servicioRanking.obtenerRankingGeneral();
+      Usuario usuarioEncontrado = servicioLogin.buscarUsuarioPorRankingGeneral(listaUsuarios, usuario.getId());
+      model.put("usuario", usuarioEncontrado);
+      return new ModelAndView("home-junior", model);
   }
 }

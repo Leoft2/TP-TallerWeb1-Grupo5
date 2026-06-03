@@ -1,92 +1,86 @@
 package com.tallerwebi.dominio;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
 import com.tallerwebi.dominio.excepcion.RankingNoDisponibleException;
-import com.tallerwebi.infraestructura.RepositorioUsuario;
-import java.util.ArrayList;
-import java.util.List;
+import com.tallerwebi.infraestructura.RepositorioUsuarioB;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.*;
+
 public class ServicioRankingGeneralTest {
 
-  ServicioRanking servicioRanking;
-  RepositorioUsuario repositorioUsuarioMock;
-  List<Usuario> listaUsuarios;
+    ServicioRanking servicioRanking;
+    RepositorioUsuarioB repositorioUsuarioMock;
 
-  @BeforeEach
-  public void init() {
-    repositorioUsuarioMock = mock(RepositorioUsuario.class);
-    servicioRanking = new ServicioRankingImpl(repositorioUsuarioMock);
-    listaUsuarios = new ArrayList<>();
-  }
+    @BeforeEach
+    public void init() {
+        repositorioUsuarioMock = mock(RepositorioUsuarioB.class);
+        servicioRanking = new ServicioRankingImpl(repositorioUsuarioMock);
+    }
 
-  @Test
-  public void queAlPedirElRankingDevuelvaTresUsuariosOrdenadosPorPuntajeDescendente() {
-    givenExistenTresUsuariosDesordenadosEnLaBaseDeDatos();
-    List<Usuario> ranking = whenOrdenoLosUsuariosYPidoElRankingGeneral();
-    thenDevuelveLosUsuariosOrdenadosDeMayorAMenor(ranking);
-  }
+    @Test
+    public void queAlPedirElRankingDevuelvaLosUsuariosYaOrdenadosDeMayorAMenorPorElRepositorio() {
+        givenDevuelveTresUsuariosYaOrdenados();
+        List<Usuario> ranking = whenPidoElRankingGeneral();
+        thenDevuelveLosUsuariosOrdenadosDeMayorAMenor(ranking);
+    }
 
-  @Test
-  public void queAlPedirElRankingYNoHayaUsuariosDevuelvaUnaListaVacia() {
-    givenNoExistenUsuariosEnLaBaseDeDatos();
-    List<Usuario> ranking = whenOrdenoLosUsuariosYPidoElRankingGeneral();
-    thenDevuelveUnRankingVacio(ranking);
-  }
+    @Test
+    public void queAlPedirElRankingYNoHayaUsuariosDevuelvaUnaListaVacia() {
+        givenNoExistenUsuariosEnLaBaseDeDatos();
+        List<Usuario> ranking = whenPidoElRankingGeneral();
+        thenDevuelveUnRankingVacio(ranking);
+    }
 
-  @Test
-  public void queSiElRepositorioFallaYDevuelveNullLanceUnaExcepcion() {
-    givenRepositorioDevuelveNull();
-    assertThrows(
-      RankingNoDisponibleException.class,
-      () -> whenOrdenoLosUsuariosYPidoElRankingGeneral()
-    );
-  }
+    @Test
+    public void queSiElRepositorioFallaYDevuelveNullLanceUnaExcepcion() {
+        givenRepositorioDevuelveNull();
+        assertThrows(RankingNoDisponibleException.class, () -> whenPidoElRankingGeneral());
+    }
 
-  private void givenRepositorioDevuelveNull() {
-    when(repositorioUsuarioMock.obtenerTodosLosUsuarios()).thenReturn(null);
-  }
+    private void givenRepositorioDevuelveNull() {
+        when(repositorioUsuarioMock.obtenerRankingGeneral()).thenReturn(null);
+    }
 
-  private void givenNoExistenUsuariosEnLaBaseDeDatos() {
-    when(repositorioUsuarioMock.obtenerTodosLosUsuarios()).thenReturn(new ArrayList<>());
-  }
+    private void givenNoExistenUsuariosEnLaBaseDeDatos() {
+        when(repositorioUsuarioMock.obtenerRankingGeneral()).thenReturn(new ArrayList<>());
+    }
 
-  private void thenDevuelveUnRankingVacio(List<Usuario> ranking) {
-    assertThat(ranking, is(empty()));
-    assertThat(ranking, hasSize(0));
-  }
+    private void thenDevuelveUnRankingVacio(List<Usuario> ranking) {
+        assertThat(ranking, is(empty()));
+        assertThat(ranking, hasSize(0));
+    }
 
-  private void thenDevuelveLosUsuariosOrdenadosDeMayorAMenor(List<Usuario> ranking) {
-    assertThat(ranking, hasSize(3));
-    assertThat(ranking.get(0).getPuntaje(), is(100));
-    assertThat(ranking.get(1).getPuntaje(), is(60));
-    assertThat(ranking.get(2).getPuntaje(), is(20));
-  }
+    private void thenDevuelveLosUsuariosOrdenadosDeMayorAMenor(List<Usuario> ranking) {
+        assertThat(ranking, hasSize(3));
+        assertThat(ranking.get(0).getPuntaje(), is(100));
+        assertThat(ranking.get(1).getPuntaje(), is(60));
+        assertThat(ranking.get(2).getPuntaje(), is(20));
+        verify(repositorioUsuarioMock, times(1)).obtenerRankingGeneral();
+    }
 
-  private List<Usuario> whenOrdenoLosUsuariosYPidoElRankingGeneral() {
-    return servicioRanking.obtenerRankingGeneral();
-  }
+    private List<Usuario> whenPidoElRankingGeneral() {
+        return servicioRanking.obtenerRankingGeneral();
+    }
 
-  private void givenExistenTresUsuariosDesordenadosEnLaBaseDeDatos() {
-    Usuario usuarioPeor = new Usuario();
-    usuarioPeor.setPuntaje(20);
+    private void givenDevuelveTresUsuariosYaOrdenados() {
+        Usuario usuarioPeor = new Usuario();
+        usuarioPeor.setPuntaje(20);
 
-    Usuario usuarioMedio = new Usuario();
-    usuarioMedio.setPuntaje(60);
+        Usuario usuarioMedio = new Usuario();
+        usuarioMedio.setPuntaje(60);
 
-    Usuario usuarioMejor = new Usuario();
-    usuarioMejor.setPuntaje(100);
+        Usuario usuarioMejor = new Usuario();
+        usuarioMejor.setPuntaje(100);
 
-    listaUsuarios.add(usuarioPeor);
-    listaUsuarios.add(usuarioMedio);
-    listaUsuarios.add(usuarioMejor);
+        List<Usuario> listaYaOrdenada = List.of(usuarioMejor, usuarioMedio, usuarioPeor);
 
-    when(repositorioUsuarioMock.obtenerTodosLosUsuarios()).thenReturn(listaUsuarios);
-  }
+        when(repositorioUsuarioMock.obtenerRankingGeneral()).thenReturn(listaYaOrdenada);
+    }
 }

@@ -6,7 +6,7 @@ import static org.mockito.Mockito.*;
 
 import com.tallerwebi.dominio.*;
 import com.tallerwebi.dominio.excepcion.OpcionInvalidaException;
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -32,7 +32,7 @@ public class ControladorExamenTest {
   HttpServletRequest request = mock(HttpServletRequest.class);
   HttpSession session = mock(HttpSession.class);
 
-  @Before
+  @BeforeEach
   public void init() {
       when(request.getSession()).thenReturn(session);
   }

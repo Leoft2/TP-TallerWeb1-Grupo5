@@ -3,7 +3,7 @@ package com.tallerwebi.dominio;
 import java.util.List;
 
 public interface ServicioExamen {
-  Pregunta generarExamen(TipoLenguaje lenguaje, TipoDificultad dificultad);
+  List<Pregunta> generarExamen(TipoLenguaje lenguaje, TipoDificultad dificultad);
   void guardarExamen(Examen examen);
   Integer calcularPuntaje(Examen examen);
 }

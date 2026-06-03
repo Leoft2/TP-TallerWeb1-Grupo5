@@ -37,11 +37,8 @@ public class ControladorExamen {
         Examen examen = new Examen();
 
         try {
-            Pregunta pregunta = servicioExamen.generarExamen(examenDto.getLenguaje(), examenDto.getDificultad());
+            List<Pregunta> pregunta = servicioExamen.generarExamen(examenDto.getLenguaje(), examenDto.getDificultad());
             model.put("preguntas", pregunta);
-            Respuesta respuestas = new Respuesta();
-            respuestas.setPregunta(pregunta);
-            model.put("respuestas", respuestas);
         } catch (OpcionInvalidaException e) {
             model.put("error", "Debe elegir las opciones");
             return new ModelAndView("examenes", model);

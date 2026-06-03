@@ -11,15 +11,18 @@ public class Examen {
     private Long id;
 
     private Integer puntaje;
+
+    @Enumerated(EnumType.STRING)
     private TipoDificultad dificultad;
+    @Enumerated(EnumType.STRING)
     private TipoLenguaje lenguaje;
+
     private LocalTime tiempoInicio;
     private LocalTime tiempoFinal;
 
     @ManyToOne
     private Usuario idUsuario;
-    @ManyToOne
-    private Respuesta respuesta;
+
 
     public Long getId() {
         return id;
@@ -77,11 +80,4 @@ public class Examen {
         this.tiempoFinal = tiempoFinal;
     }
 
-    public Respuesta getRespuesta() {
-        return respuesta;
-    }
-
-    public void setRespuesta(Respuesta respuesta) {
-        this.respuesta = respuesta;
-    }
 }

@@ -9,9 +9,6 @@ public class Respuesta {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    private Pregunta pregunta;
-
     private String respuestaUsuario;
 
     public Long getId() {
@@ -20,14 +17,6 @@ public class Respuesta {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Pregunta getPregunta() {
-        return pregunta;
-    }
-
-    public void setPregunta(Pregunta pregunta) {
-        this.pregunta = pregunta;
     }
 
     public String getRespuestaUsuario() {

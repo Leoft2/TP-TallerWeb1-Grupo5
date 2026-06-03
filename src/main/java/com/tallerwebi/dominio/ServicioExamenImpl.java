@@ -21,7 +21,7 @@ public class ServicioExamenImpl implements ServicioExamen {
     }
 
     @Override
-    public Pregunta generarExamen(TipoLenguaje lenguaje, TipoDificultad dificultad) {
+    public List<Pregunta> generarExamen(TipoLenguaje lenguaje, TipoDificultad dificultad) {
         if (lenguaje == null || dificultad == null) {
             throw new OpcionInvalidaException();
         }

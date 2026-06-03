@@ -2,7 +2,6 @@ package com.tallerwebi.infraestructura;
 
 import com.tallerwebi.dominio.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
@@ -21,11 +20,11 @@ public class RespositorioExamenImpl implements RepositorioExamen {
    }
 
   @Override
-  public Pregunta buscarExamenPorLenguajeYDificultad(TipoLenguaje lenguaje, TipoDificultad dificultad) {
-      return (Pregunta) sessionFactory.getCurrentSession()
+  public List<Pregunta> buscarExamenPorLenguajeYDificultad(TipoLenguaje lenguaje, TipoDificultad dificultad) {
+      return sessionFactory.getCurrentSession()
               .createCriteria(Pregunta.class)
               .add(Restrictions.eq("lenguaje", lenguaje))
-              .add(Restrictions.eq("dificultad", dificultad));
+              .add(Restrictions.eq("dificultad", dificultad)).list();
   }
 
   @Override

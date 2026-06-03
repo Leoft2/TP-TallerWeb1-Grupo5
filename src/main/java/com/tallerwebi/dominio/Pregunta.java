@@ -9,8 +9,11 @@ public class Pregunta {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Enumerated(EnumType.STRING)
     private TipoLenguaje lenguaje;
+    @Enumerated(EnumType.STRING)
     private TipoDificultad dificultad;
+
     private String consigna;
     private String opcionA;
     private String opcionB;

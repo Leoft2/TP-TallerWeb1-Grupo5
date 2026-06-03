@@ -9,17 +9,19 @@
 
 <form th:action="@{/guardar-examen}" method="post" th:object="${examen}">
 
+
     <input type="hidden" th:field="*{dificultad}" />
     <input type="hidden" th:field="*{lenguaje}" />
     <input type="hidden" th:field="*{tiempoInicio}" />
 
     <label>Consigna</label>
-    <span th:text="${preguntas.consigna}"></span>
-    <span th:text="${'A) ' + preguntas.opcionA}"></span>
-    <span th:text="${'B) ' + preguntas.opcionB}"></span>
-    <span th:text="${'C) ' + preguntas.opcionC}"></span>
-
-    <input type="text" maxlength="1" th:text="${respuestas.respuestaUsuario}">
+    <div th:each="pregunta : ${preguntas}">
+        <span th:text="${pregunta.consigna}"></span>
+        <span th:text="${'A) ' + pregunta.opcionA}"></span>
+        <span th:text="${'B) ' + pregunta.opcionB}"></span>
+        <span th:text="${'C) ' + pregunta.opcionC}"></span>
+    </div>
+    <input type="text" maxlength="1">
 
     <button type="submit">Enviar Examen</button>
 </form>

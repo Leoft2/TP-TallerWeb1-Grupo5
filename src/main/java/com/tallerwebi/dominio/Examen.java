@@ -22,7 +22,9 @@ public class Examen {
 
     @ManyToOne
     private Usuario idUsuario;
-
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "respuesta_id")
+    private Respuesta respuesta;
 
     public Long getId() {
         return id;
@@ -80,4 +82,11 @@ public class Examen {
         this.tiempoFinal = tiempoFinal;
     }
 
+    public Respuesta getRespuesta() {
+        return respuesta;
+    }
+
+    public void setRespuesta(Respuesta respuesta) {
+        this.respuesta = respuesta;
+    }
 }

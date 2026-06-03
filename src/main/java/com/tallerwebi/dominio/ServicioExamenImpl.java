@@ -30,10 +30,19 @@ public class ServicioExamenImpl implements ServicioExamen {
     }
 
     @Override
-    public Integer calcularPuntaje(Examen examen) {
+    public Integer calcularPuntaje(Examen examen, List<Pregunta> preguntas) {
+        List<String> respuestasUsuario = examen.getRespuesta().getRespuestaUsuario();
         int puntaje = 0;
 
-        return puntaje;
+        for (int i = 0; i < preguntas.size(); i++) {
+            String correcta = preguntas.get(i).getRespuestaCorrecta();
+            String elegida = respuestasUsuario.get(i).toUpperCase().trim();
+
+            if (correcta.equals(elegida)) {
+                puntaje++;
+            }
+        }
+        return puntajePorDificultad(puntaje, examen.getDificultad());
     }
 
     public Integer puntajePorDificultad(Integer puntaje, TipoDificultad dificultad) {

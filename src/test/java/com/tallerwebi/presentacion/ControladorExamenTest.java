@@ -6,9 +6,13 @@ import static org.mockito.Mockito.*;
 
 import com.tallerwebi.dominio.*;
 import com.tallerwebi.dominio.excepcion.OpcionInvalidaException;
+import org.junit.Before;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.List;
 
 
 public class ControladorExamenTest {
@@ -20,11 +24,18 @@ public class ControladorExamenTest {
   private static final TipoLenguaje lenguje = TipoLenguaje.JAVA;
   private static final TipoDificultad dificultad = TipoDificultad.BASICO;
 
-    ServicioExamen servicioExamen = mock(ServicioExamen.class);
-    RepositorioPregunta repositorioPregunta = mock(RepositorioPregunta.class);
-    RepositorioExamen repositorioExamen = mock(RepositorioExamen.class);
-    ServicioExamenImpl servicioExamenImpl = new ServicioExamenImpl(repositorioExamen, repositorioPregunta);
-    ControladorExamen controladorExamen = new ControladorExamen(servicioExamenImpl);
+  ServicioExamen servicioExamen = mock(ServicioExamen.class);
+  RepositorioPregunta repositorioPregunta = mock(RepositorioPregunta.class);
+  RepositorioExamen repositorioExamen = mock(RepositorioExamen.class);
+  ServicioExamenImpl servicioExamenImpl = new ServicioExamenImpl(repositorioExamen, repositorioPregunta);
+  ControladorExamen controladorExamen = new ControladorExamen(servicioExamenImpl);
+  HttpServletRequest request = mock(HttpServletRequest.class);
+  HttpSession session = mock(HttpSession.class);
+
+  @Before
+  public void init() {
+      when(request.getSession()).thenReturn(session);
+  }
 
   @Test
   public void elExamenSeCreaSiIngresaElLenguajeYDificultadAdecuadoDeLasOpciones() {
@@ -39,13 +50,15 @@ public class ControladorExamenTest {
       modelAndView.getModel().get("generado").toString(),
       equalToIgnoringCase("El examen se genero correctamente")
     );
+      verify(session).setAttribute(eq("preguntas"), any(List.class));
   }
 
   private ModelAndView whenGenerarExamen(TipoLenguaje lenguaje, TipoDificultad dificultad) {
+    when(request.getSession()).thenReturn(session);
     ExamenDto examenDto = new ExamenDto();
     examenDto.setLenguaje(lenguaje);
     examenDto.setDificultad(dificultad);
-    ModelAndView modelAndView = controladorExamen.generarExamen(examenDto);
+    ModelAndView modelAndView = controladorExamen.generarExamen(examenDto, request);
     return modelAndView;
   }
 

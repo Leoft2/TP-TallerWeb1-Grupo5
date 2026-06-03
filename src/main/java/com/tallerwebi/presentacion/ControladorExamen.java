@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 public class ControladorExamen {
 
@@ -32,18 +34,26 @@ public class ControladorExamen {
     }
 
     @RequestMapping(path = "/examen", method = RequestMethod.POST)
-    public ModelAndView generarExamen(@ModelAttribute("examenDto") ExamenDto examenDto) {
+    public ModelAndView generarExamen(@ModelAttribute("examenDto") ExamenDto examenDto, HttpServletRequest request) {
         ModelMap model = new ModelMap();
         Examen examen = new Examen();
+        List<Pregunta> pregunta = null;
 
         try {
-            List<Pregunta> pregunta = servicioExamen.generarExamen(examenDto.getLenguaje(), examenDto.getDificultad());
+            pregunta = servicioExamen.generarExamen(examenDto.getLenguaje(), examenDto.getDificultad());
+            request.getSession().setAttribute("preguntas", pregunta);
             model.put("preguntas", pregunta);
         } catch (OpcionInvalidaException e) {
             model.put("error", "Debe elegir las opciones");
             return new ModelAndView("examenes", model);
         }
 
+        Respuesta respuesta = new Respuesta();
+        for (int i = 0; i < pregunta.size(); i++) {
+            respuesta.getRespuestaUsuario().add("");
+        }
+
+        examen.setRespuesta(respuesta);
         examen.setTiempoInicio(LocalTime.now());
         examen.setDificultad(examenDto.getDificultad());
         examen.setLenguaje(examenDto.getLenguaje());
@@ -54,8 +64,11 @@ public class ControladorExamen {
     }
 
     @RequestMapping(path = "/guardar-examen", method = RequestMethod.POST)
-    public ModelAndView guardarExamen(@ModelAttribute("examen") Examen examen) {
-        Integer puntaje = servicioExamen.calcularPuntaje(examen);
+    public ModelAndView guardarExamen(@ModelAttribute("examen") Examen examen, HttpServletRequest request) {
+
+        List<Pregunta> preguntas = (List<Pregunta>) request.getSession().getAttribute("preguntas");
+
+        Integer puntaje = servicioExamen.calcularPuntaje(examen, preguntas);
         examen.setTiempoFinal(LocalTime.now());
         examen.setPuntaje(puntaje);
         servicioExamen.guardarExamen(examen);

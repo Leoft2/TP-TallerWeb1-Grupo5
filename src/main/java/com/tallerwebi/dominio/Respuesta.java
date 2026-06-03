@@ -1,6 +1,8 @@
 package com.tallerwebi.dominio;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Respuesta {
@@ -9,7 +11,8 @@ public class Respuesta {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String respuestaUsuario;
+    @ElementCollection
+    private List<String> respuestaUsuario = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -19,11 +22,11 @@ public class Respuesta {
         this.id = id;
     }
 
-    public String getRespuestaUsuario() {
+    public List<String> getRespuestaUsuario() {
         return respuestaUsuario;
     }
 
-    public void setRespuestaUsuario(String respuestaUsuario) {
+    public void setRespuestaUsuario(List<String> respuestaUsuario) {
         this.respuestaUsuario = respuestaUsuario;
     }
 }

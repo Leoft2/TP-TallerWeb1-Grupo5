@@ -12,12 +12,10 @@ import org.springframework.stereotype.Service;
 public class ServicioExamenImpl implements ServicioExamen {
 
     RepositorioExamen repositorioExamen;
-    RepositorioPregunta repositorioPregunta;
 
     @Autowired
-    public ServicioExamenImpl(RepositorioExamen repositorioExamen, RepositorioPregunta repositorioPregunta) {
+    public ServicioExamenImpl(RepositorioExamen repositorioExamen) {
         this.repositorioExamen = repositorioExamen;
-        this.repositorioPregunta = repositorioPregunta;
     }
 
     @Override

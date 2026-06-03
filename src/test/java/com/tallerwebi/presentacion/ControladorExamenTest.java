@@ -25,9 +25,8 @@ public class ControladorExamenTest {
   private static final TipoDificultad dificultad = TipoDificultad.BASICO;
 
   ServicioExamen servicioExamen = mock(ServicioExamen.class);
-  RepositorioPregunta repositorioPregunta = mock(RepositorioPregunta.class);
   RepositorioExamen repositorioExamen = mock(RepositorioExamen.class);
-  ServicioExamenImpl servicioExamenImpl = new ServicioExamenImpl(repositorioExamen, repositorioPregunta);
+  ServicioExamenImpl servicioExamenImpl = new ServicioExamenImpl(repositorioExamen);
   ControladorExamen controladorExamen = new ControladorExamen(servicioExamenImpl);
   HttpServletRequest request = mock(HttpServletRequest.class);
   HttpSession session = mock(HttpSession.class);
